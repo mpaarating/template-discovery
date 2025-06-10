@@ -1,0 +1,752 @@
+[
+  {
+    "id": "zt-001",
+    "title": "HubSpot to Zendesk Automation",
+    "description": "Connect HubSpot with Zendesk to streamline your workflow.",
+    "apps": [
+      {
+        "name": "HubSpot",
+        "slug": "hubspot",
+        "icon_url": "...",
+        "color": "#FF7A59"
+      },
+      {
+        "name": "Zendesk",
+        "slug": "zendesk",
+        "icon_url": "...",
+        "color": "#03363D"
+      }
+    ],
+    "categories": ["Files", "Marketing"],
+    "complexity": "advanced",
+    "popularity_score": 60,
+    "setup_time_minutes": 15,
+    "use_cases": ["meeting reminders", "team alerts"],
+    "created_at": "2024-05-02T00:00:00Z"
+  },
+  {
+    "id": "zt-002",
+    "title": "Trello to Google Sheets Automation",
+    "description": "Connect Trello with Google Sheets to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Trello",
+        "slug": "trello",
+        "icon_url": "...",
+        "color": "#0079BF"
+      },
+      {
+        "name": "Google Sheets",
+        "slug": "google_sheets",
+        "icon_url": "...",
+        "color": "#0F9D58"
+      }
+    ],
+    "categories": ["Files", "Calendar"],
+    "complexity": "beginner",
+    "popularity_score": 94,
+    "setup_time_minutes": 15,
+    "use_cases": ["auto invoicing", "report generation"],
+    "created_at": "2024-03-08T00:00:00Z"
+  },
+  {
+    "id": "zt-003",
+    "title": "Stripe to Zendesk Automation",
+    "description": "Connect Stripe with Zendesk to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Stripe",
+        "slug": "stripe",
+        "icon_url": "...",
+        "color": "#635BFF"
+      },
+      {
+        "name": "Zendesk",
+        "slug": "zendesk",
+        "icon_url": "...",
+        "color": "#03363D"
+      }
+    ],
+    "categories": ["CRM", "Files"],
+    "complexity": "advanced",
+    "popularity_score": 85,
+    "setup_time_minutes": 5,
+    "use_cases": ["report generation", "task creation"],
+    "created_at": "2024-02-09T00:00:00Z"
+  },
+  {
+    "id": "zt-004",
+    "title": "GitHub to Asana Automation",
+    "description": "Connect GitHub with Asana to streamline your workflow.",
+    "apps": [
+      {
+        "name": "GitHub",
+        "slug": "github",
+        "icon_url": "...",
+        "color": "#333"
+      },
+      {
+        "name": "Asana",
+        "slug": "asana",
+        "icon_url": "...",
+        "color": "#273347"
+      }
+    ],
+    "categories": ["Files", "Finance"],
+    "complexity": "beginner",
+    "popularity_score": 71,
+    "setup_time_minutes": 8,
+    "use_cases": ["meeting reminders", "task creation"],
+    "created_at": "2024-02-04T00:00:00Z"
+  },
+  {
+    "id": "zt-005",
+    "title": "Airtable to Google Sheets Automation",
+    "description": "Connect Airtable with Google Sheets to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Airtable",
+        "slug": "airtable",
+        "icon_url": "...",
+        "color": "#18BFFF"
+      },
+      {
+        "name": "Google Sheets",
+        "slug": "google_sheets",
+        "icon_url": "...",
+        "color": "#0F9D58"
+      }
+    ],
+    "categories": ["Marketing", "Finance"],
+    "complexity": "beginner",
+    "popularity_score": 71,
+    "setup_time_minutes": 10,
+    "use_cases": ["client follow-up", "calendar sync"],
+    "created_at": "2024-04-30T00:00:00Z"
+  },
+  {
+    "id": "zt-006",
+    "title": "Zoom to Stripe Automation",
+    "description": "Connect Zoom with Stripe to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Zoom",
+        "slug": "zoom",
+        "icon_url": "...",
+        "color": "#2D8CFF"
+      },
+      {
+        "name": "Stripe",
+        "slug": "stripe",
+        "icon_url": "...",
+        "color": "#635BFF"
+      }
+    ],
+    "categories": ["CRM", "Calendar"],
+    "complexity": "advanced",
+    "popularity_score": 54,
+    "setup_time_minutes": 3,
+    "use_cases": ["email drip campaign", "report generation"],
+    "created_at": "2024-04-21T00:00:00Z"
+  },
+  {
+    "id": "zt-007",
+    "title": "Notion to Google Sheets Automation",
+    "description": "Connect Notion with Google Sheets to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Notion",
+        "slug": "notion",
+        "icon_url": "...",
+        "color": "#000000"
+      },
+      {
+        "name": "Google Sheets",
+        "slug": "google_sheets",
+        "icon_url": "...",
+        "color": "#0F9D58"
+      }
+    ],
+    "categories": ["Project Management", "Finance"],
+    "complexity": "intermediate",
+    "popularity_score": 94,
+    "setup_time_minutes": 12,
+    "use_cases": ["task creation", "meeting reminders"],
+    "created_at": "2024-05-06T00:00:00Z"
+  },
+  {
+    "id": "zt-008",
+    "title": "Notion to Trello Automation",
+    "description": "Connect Notion with Trello to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Notion",
+        "slug": "notion",
+        "icon_url": "...",
+        "color": "#000000"
+      },
+      {
+        "name": "Trello",
+        "slug": "trello",
+        "icon_url": "...",
+        "color": "#0079BF"
+      }
+    ],
+    "categories": ["Calendar", "Project Management"],
+    "complexity": "advanced",
+    "popularity_score": 58,
+    "setup_time_minutes": 3,
+    "use_cases": ["email drip campaign", "report generation"],
+    "created_at": "2024-01-27T00:00:00Z"
+  },
+  {
+    "id": "zt-009",
+    "title": "SurveyMonkey to Stripe Automation",
+    "description": "Connect SurveyMonkey with Stripe to streamline your workflow.",
+    "apps": [
+      {
+        "name": "SurveyMonkey",
+        "slug": "surveymonkey",
+        "icon_url": "...",
+        "color": "#00BF6F"
+      },
+      {
+        "name": "Stripe",
+        "slug": "stripe",
+        "icon_url": "...",
+        "color": "#635BFF"
+      }
+    ],
+    "categories": ["Analytics", "Support"],
+    "complexity": "intermediate",
+    "popularity_score": 98,
+    "setup_time_minutes": 15,
+    "use_cases": ["task creation", "report generation"],
+    "created_at": "2024-03-25T00:00:00Z"
+  },
+  {
+    "id": "zt-010",
+    "title": "Google Sheets to Zendesk Automation",
+    "description": "Connect Google Sheets with Zendesk to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Google Sheets",
+        "slug": "google_sheets",
+        "icon_url": "...",
+        "color": "#0F9D58"
+      },
+      {
+        "name": "Zendesk",
+        "slug": "zendesk",
+        "icon_url": "...",
+        "color": "#03363D"
+      }
+    ],
+    "categories": ["Files", "Marketing"],
+    "complexity": "advanced",
+    "popularity_score": 72,
+    "setup_time_minutes": 15,
+    "use_cases": ["team alerts", "auto invoicing"],
+    "created_at": "2024-03-04T00:00:00Z"
+  },
+  {
+    "id": "zt-011",
+    "title": "Zendesk to HubSpot Automation",
+    "description": "Connect Zendesk with HubSpot to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Zendesk",
+        "slug": "zendesk",
+        "icon_url": "...",
+        "color": "#03363D"
+      },
+      {
+        "name": "HubSpot",
+        "slug": "hubspot",
+        "icon_url": "...",
+        "color": "#FF7A59"
+      }
+    ],
+    "categories": ["Calendar", "Analytics"],
+    "complexity": "beginner",
+    "popularity_score": 90,
+    "setup_time_minutes": 12,
+    "use_cases": ["client follow-up", "task creation"],
+    "created_at": "2024-03-21T00:00:00Z"
+  },
+  {
+    "id": "zt-012",
+    "title": "Notion to Mailchimp Automation",
+    "description": "Connect Notion with Mailchimp to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Notion",
+        "slug": "notion",
+        "icon_url": "...",
+        "color": "#000000"
+      },
+      {
+        "name": "Mailchimp",
+        "slug": "mailchimp",
+        "icon_url": "...",
+        "color": "#FFE01B"
+      }
+    ],
+    "categories": ["Files", "Support"],
+    "complexity": "intermediate",
+    "popularity_score": 79,
+    "setup_time_minutes": 12,
+    "use_cases": ["calendar sync", "team alerts"],
+    "created_at": "2024-07-12T00:00:00Z"
+  },
+  {
+    "id": "zt-013",
+    "title": "Asana to Trello Automation",
+    "description": "Connect Asana with Trello to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Asana",
+        "slug": "asana",
+        "icon_url": "...",
+        "color": "#273347"
+      },
+      {
+        "name": "Trello",
+        "slug": "trello",
+        "icon_url": "...",
+        "color": "#0079BF"
+      }
+    ],
+    "categories": ["Calendar", "CRM"],
+    "complexity": "beginner",
+    "popularity_score": 73,
+    "setup_time_minutes": 3,
+    "use_cases": ["calendar sync", "auto invoicing"],
+    "created_at": "2024-08-23T00:00:00Z"
+  },
+  {
+    "id": "zt-014",
+    "title": "Trello to Intercom Automation",
+    "description": "Connect Trello with Intercom to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Trello",
+        "slug": "trello",
+        "icon_url": "...",
+        "color": "#0079BF"
+      },
+      {
+        "name": "Intercom",
+        "slug": "intercom",
+        "icon_url": "...",
+        "color": "#1F8DED"
+      }
+    ],
+    "categories": ["Marketing", "Analytics"],
+    "complexity": "intermediate",
+    "popularity_score": 54,
+    "setup_time_minutes": 10,
+    "use_cases": ["calendar sync", "client follow-up"],
+    "created_at": "2024-09-18T00:00:00Z"
+  },
+  {
+    "id": "zt-015",
+    "title": "SurveyMonkey to Zoom Automation",
+    "description": "Connect SurveyMonkey with Zoom to streamline your workflow.",
+    "apps": [
+      {
+        "name": "SurveyMonkey",
+        "slug": "surveymonkey",
+        "icon_url": "...",
+        "color": "#00BF6F"
+      },
+      {
+        "name": "Zoom",
+        "slug": "zoom",
+        "icon_url": "...",
+        "color": "#2D8CFF"
+      }
+    ],
+    "categories": ["Finance", "CRM"],
+    "complexity": "advanced",
+    "popularity_score": 53,
+    "setup_time_minutes": 5,
+    "use_cases": ["email drip campaign", "meeting reminders"],
+    "created_at": "2024-02-11T00:00:00Z"
+  },
+  {
+    "id": "zt-016",
+    "title": "Intercom to HubSpot Automation",
+    "description": "Connect Intercom with HubSpot to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Intercom",
+        "slug": "intercom",
+        "icon_url": "...",
+        "color": "#1F8DED"
+      },
+      {
+        "name": "HubSpot",
+        "slug": "hubspot",
+        "icon_url": "...",
+        "color": "#FF7A59"
+      }
+    ],
+    "categories": ["Files", "Project Management"],
+    "complexity": "beginner",
+    "popularity_score": 91,
+    "setup_time_minutes": 3,
+    "use_cases": ["email drip campaign", "task creation"],
+    "created_at": "2024-03-27T00:00:00Z"
+  },
+  {
+    "id": "zt-017",
+    "title": "Zendesk to Notion Automation",
+    "description": "Connect Zendesk with Notion to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Zendesk",
+        "slug": "zendesk",
+        "icon_url": "...",
+        "color": "#03363D"
+      },
+      {
+        "name": "Notion",
+        "slug": "notion",
+        "icon_url": "...",
+        "color": "#000000"
+      }
+    ],
+    "categories": ["Calendar", "Analytics"],
+    "complexity": "advanced",
+    "popularity_score": 72,
+    "setup_time_minutes": 10,
+    "use_cases": ["auto invoicing", "email drip campaign"],
+    "created_at": "2024-03-02T00:00:00Z"
+  },
+  {
+    "id": "zt-018",
+    "title": "Notion to Asana Automation",
+    "description": "Connect Notion with Asana to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Notion",
+        "slug": "notion",
+        "icon_url": "...",
+        "color": "#000000"
+      },
+      {
+        "name": "Asana",
+        "slug": "asana",
+        "icon_url": "...",
+        "color": "#273347"
+      }
+    ],
+    "categories": ["Marketing", "Files"],
+    "complexity": "intermediate",
+    "popularity_score": 86,
+    "setup_time_minutes": 15,
+    "use_cases": ["auto invoicing", "report generation"],
+    "created_at": "2024-07-10T00:00:00Z"
+  },
+  {
+    "id": "zt-019",
+    "title": "Google Sheets to Calendly Automation",
+    "description": "Connect Google Sheets with Calendly to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Google Sheets",
+        "slug": "google_sheets",
+        "icon_url": "...",
+        "color": "#0F9D58"
+      },
+      {
+        "name": "Calendly",
+        "slug": "calendly",
+        "icon_url": "...",
+        "color": "#00A2FF"
+      }
+    ],
+    "categories": ["Support", "Finance"],
+    "complexity": "beginner",
+    "popularity_score": 85,
+    "setup_time_minutes": 8,
+    "use_cases": ["email drip campaign", "report generation"],
+    "created_at": "2024-06-10T00:00:00Z"
+  },
+  {
+    "id": "zt-020",
+    "title": "SurveyMonkey to Notion Automation",
+    "description": "Connect SurveyMonkey with Notion to streamline your workflow.",
+    "apps": [
+      {
+        "name": "SurveyMonkey",
+        "slug": "surveymonkey",
+        "icon_url": "...",
+        "color": "#00BF6F"
+      },
+      {
+        "name": "Notion",
+        "slug": "notion",
+        "icon_url": "...",
+        "color": "#000000"
+      }
+    ],
+    "categories": ["Files", "Support"],
+    "complexity": "beginner",
+    "popularity_score": 92,
+    "setup_time_minutes": 5,
+    "use_cases": ["meeting reminders", "report generation"],
+    "created_at": "2024-04-23T00:00:00Z"
+  },
+  {
+    "id": "zt-021",
+    "title": "SurveyMonkey to Google Sheets Automation",
+    "description": "Connect SurveyMonkey with Google Sheets to streamline your workflow.",
+    "apps": [
+      {
+        "name": "SurveyMonkey",
+        "slug": "surveymonkey",
+        "icon_url": "...",
+        "color": "#00BF6F"
+      },
+      {
+        "name": "Google Sheets",
+        "slug": "google_sheets",
+        "icon_url": "...",
+        "color": "#0F9D58"
+      }
+    ],
+    "categories": ["Calendar", "Finance"],
+    "complexity": "beginner",
+    "popularity_score": 79,
+    "setup_time_minutes": 15,
+    "use_cases": ["calendar sync", "auto invoicing"],
+    "created_at": "2024-08-23T00:00:00Z"
+  },
+  {
+    "id": "zt-022",
+    "title": "Mailchimp to GitHub Automation",
+    "description": "Connect Mailchimp with GitHub to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Mailchimp",
+        "slug": "mailchimp",
+        "icon_url": "...",
+        "color": "#FFE01B"
+      },
+      {
+        "name": "GitHub",
+        "slug": "github",
+        "icon_url": "...",
+        "color": "#333"
+      }
+    ],
+    "categories": ["CRM", "Marketing"],
+    "complexity": "advanced",
+    "popularity_score": 57,
+    "setup_time_minutes": 10,
+    "use_cases": ["calendar sync", "email drip campaign"],
+    "created_at": "2024-08-21T00:00:00Z"
+  },
+  {
+    "id": "zt-023",
+    "title": "Calendly to Trello Automation",
+    "description": "Connect Calendly with Trello to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Calendly",
+        "slug": "calendly",
+        "icon_url": "...",
+        "color": "#00A2FF"
+      },
+      {
+        "name": "Trello",
+        "slug": "trello",
+        "icon_url": "...",
+        "color": "#0079BF"
+      }
+    ],
+    "categories": ["Files", "Analytics"],
+    "complexity": "advanced",
+    "popularity_score": 81,
+    "setup_time_minutes": 5,
+    "use_cases": ["task creation", "email drip campaign"],
+    "created_at": "2024-08-14T00:00:00Z"
+  },
+  {
+    "id": "zt-024",
+    "title": "Mailchimp to HubSpot Automation",
+    "description": "Connect Mailchimp with HubSpot to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Mailchimp",
+        "slug": "mailchimp",
+        "icon_url": "...",
+        "color": "#FFE01B"
+      },
+      {
+        "name": "HubSpot",
+        "slug": "hubspot",
+        "icon_url": "...",
+        "color": "#FF7A59"
+      }
+    ],
+    "categories": ["Marketing", "Analytics"],
+    "complexity": "advanced",
+    "popularity_score": 96,
+    "setup_time_minutes": 5,
+    "use_cases": ["task creation", "meeting reminders"],
+    "created_at": "2024-05-12T00:00:00Z"
+  },
+  {
+    "id": "zt-025",
+    "title": "Jira to Mailchimp Automation",
+    "description": "Connect Jira with Mailchimp to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Jira",
+        "slug": "jira",
+        "icon_url": "...",
+        "color": "#0052CC"
+      },
+      {
+        "name": "Mailchimp",
+        "slug": "mailchimp",
+        "icon_url": "...",
+        "color": "#FFE01B"
+      }
+    ],
+    "categories": ["CRM", "Calendar"],
+    "complexity": "intermediate",
+    "popularity_score": 98,
+    "setup_time_minutes": 5,
+    "use_cases": ["client follow-up", "calendar sync"],
+    "created_at": "2024-08-02T00:00:00Z"
+  },
+  {
+    "id": "zt-026",
+    "title": "Mailchimp to Zoom Automation",
+    "description": "Connect Mailchimp with Zoom to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Mailchimp",
+        "slug": "mailchimp",
+        "icon_url": "...",
+        "color": "#FFE01B"
+      },
+      {
+        "name": "Zoom",
+        "slug": "zoom",
+        "icon_url": "...",
+        "color": "#2D8CFF"
+      }
+    ],
+    "categories": ["Support", "CRM"],
+    "complexity": "beginner",
+    "popularity_score": 76,
+    "setup_time_minutes": 3,
+    "use_cases": ["task creation", "email drip campaign"],
+    "created_at": "2024-01-28T00:00:00Z"
+  },
+  {
+    "id": "zt-027",
+    "title": "SurveyMonkey to Stripe Automation",
+    "description": "Connect SurveyMonkey with Stripe to streamline your workflow.",
+    "apps": [
+      {
+        "name": "SurveyMonkey",
+        "slug": "surveymonkey",
+        "icon_url": "...",
+        "color": "#00BF6F"
+      },
+      {
+        "name": "Stripe",
+        "slug": "stripe",
+        "icon_url": "...",
+        "color": "#635BFF"
+      }
+    ],
+    "categories": ["Marketing", "Support"],
+    "complexity": "beginner",
+    "popularity_score": 100,
+    "setup_time_minutes": 5,
+    "use_cases": ["report generation", "meeting reminders"],
+    "created_at": "2024-01-19T00:00:00Z"
+  },
+  {
+    "id": "zt-028",
+    "title": "Trello to Asana Automation",
+    "description": "Connect Trello with Asana to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Trello",
+        "slug": "trello",
+        "icon_url": "...",
+        "color": "#0079BF"
+      },
+      {
+        "name": "Asana",
+        "slug": "asana",
+        "icon_url": "...",
+        "color": "#273347"
+      }
+    ],
+    "categories": ["Analytics", "Files"],
+    "complexity": "beginner",
+    "popularity_score": 77,
+    "setup_time_minutes": 10,
+    "use_cases": ["meeting reminders", "auto invoicing"],
+    "created_at": "2024-04-19T00:00:00Z"
+  },
+  {
+    "id": "zt-029",
+    "title": "Trello to GitHub Automation",
+    "description": "Connect Trello with GitHub to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Trello",
+        "slug": "trello",
+        "icon_url": "...",
+        "color": "#0079BF"
+      },
+      {
+        "name": "GitHub",
+        "slug": "github",
+        "icon_url": "...",
+        "color": "#333"
+      }
+    ],
+    "categories": ["Analytics", "Finance"],
+    "complexity": "advanced",
+    "popularity_score": 94,
+    "setup_time_minutes": 5,
+    "use_cases": ["client follow-up", "calendar sync"],
+    "created_at": "2024-02-28T00:00:00Z"
+  },
+  {
+    "id": "zt-030",
+    "title": "Notion to GitHub Automation",
+    "description": "Connect Notion with GitHub to streamline your workflow.",
+    "apps": [
+      {
+        "name": "Notion",
+        "slug": "notion",
+        "icon_url": "...",
+        "color": "#000000"
+      },
+      {
+        "name": "GitHub",
+        "slug": "github",
+        "icon_url": "...",
+        "color": "#333"
+      }
+    ],
+    "categories": ["Analytics", "Project Management"],
+    "complexity": "intermediate",
+    "popularity_score": 56,
+    "setup_time_minutes": 3,
+    "use_cases": ["task creation", "email drip campaign"],
+    "created_at": "2024-05-04T00:00:00Z"
+  }
+]
