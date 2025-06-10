@@ -1,9 +1,5 @@
 import {
   Combobox,
-  ComboboxButton,
-  ComboboxInput,
-  ComboboxOption,
-  ComboboxOptions,
   Label,
   Listbox,
   ListboxButton,
@@ -14,14 +10,14 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
   CheckIcon,
-  ChevronUpDownIcon,
 } from '@heroicons/react/24/outline';
 import type { IFuseOptions } from 'fuse.js';
 import Fuse from 'fuse.js';
 import React, { useEffect, useMemo, useState } from 'react';
-import { FixedSizeList } from 'react-window';
 import type { ZapTemplate } from '../types';
+import { SearchInput } from './common/SearchInput';
 import { UseCaseSelector } from './common/UseCaseSelector';
+import { TemplateList } from './common/TemplateList';
 
 interface TemplateSearchProps {
   templates: ZapTemplate[];
@@ -159,7 +155,7 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
           selectedCategories.every((cat) => t.categories.includes(cat)),
         )
       : initial;
-  }, [debouncedQuery, fuse, templates, selectedCategories]);
+  }, [debouncedQuery, fuse, selectedCategories, templatesByUseCase]);
 
   const sorted = useMemo(() => {
     const items = [...filtered];
@@ -334,87 +330,12 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
               {sorted.length} results found
             </span>
           </Label>
-          <div className='relative w-full'>
-            <ComboboxInput
-              id='template-search'
-              className='
-              w-full
-              px-4 py-3
-              bg-gray-100 dark:bg-gray-700
-              text-gray-900 dark:text-gray-100
-              border border-gray-300 dark:border-gray-600
-              rounded-md
-              focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50
-              placeholder-gray-400 dark:placeholder-gray-500
-            '
-              placeholder='Search templates…'
-              displayValue={(t: ZapTemplate) => t?.title ?? ''}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-
-            <ComboboxButton
-              aria-label='Toggle template suggestions'
-              className='absolute inset-y-0 right-0 flex items-center p-2  h-full'
-            >
-              <ChevronUpDownIcon
-                className='h-5 w-5 text-gray-400'
-                aria-hidden
-              />
-            </ComboboxButton>
-          </div>
-
-          {/* Results list or empty state */}
-          <ComboboxOptions className='absolute mt-1 w-full bg-white dark:bg-gray-700 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-10'>
-            {sorted.length > 0 ? (
-              <div className='h-60'>
-                <FixedSizeList
-                  height={240}
-                  itemCount={sorted.length}
-                  itemSize={48}
-                  width='100%'
-                  overscanCount={10}
-                >
-                  {({ index, style }) => {
-                    const tpl = sorted[index];
-                    return (
-                      <ComboboxOption
-                        key={tpl.id}
-                        value={tpl}
-                        style={style}
-                        className={({ focus }) =>
-                          `relative cursor-pointer select-none py-2 px-4 ${
-                            focus
-                              ? 'bg-primary/20 text-primary dark:bg-primary/20 dark:text-primary'
-                              : 'text-gray-900 dark:text-gray-100'
-                          }`
-                        }
-                      >
-                        {({ selected: isSelected }) => (
-                          <span
-                            className={`block truncate ${
-                              isSelected ? 'font-semibold' : 'font-normal'
-                            }`}
-                          >
-                            {tpl.title}{' '}
-                            {isSelected && (
-                              <CheckIcon
-                                className='h-5 w-5 text-primary inline-block'
-                                aria-hidden='true'
-                              />
-                            )}
-                          </span>
-                        )}
-                      </ComboboxOption>
-                    );
-                  }}
-                </FixedSizeList>
-              </div>
-            ) : (
-              <div className='h-60 flex items-center justify-center text-gray-500 dark:text-gray-400'>
-                No templates found
-              </div>
-            )}
-          </ComboboxOptions>
+          <SearchInput
+            value={query}
+            onChange={setQuery}
+            resultCount={sorted.length}
+          />
+          <TemplateList sorted={sorted} onSelect={onTemplateSelect} />
         </div>
       </Combobox>
       {/* Live region showing result counts */}
