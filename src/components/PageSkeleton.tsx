@@ -6,7 +6,7 @@ export function PageSkeleton() {
       <div className='h-12 bg-gray-200 dark:bg-gray-700 mb-6 mx-4 rounded' />
 
       <div className='flex'>
-        <aside className='w-64 p-4 space-y-2'>
+        <aside className='w-64 p-4 space-y-2 bg-gray-50 dark:bg-gray-800'>
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className='h-8 bg-gray-200 dark:bg-gray-700 rounded' />
           ))}

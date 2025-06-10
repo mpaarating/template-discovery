@@ -22,14 +22,22 @@ export function UseCaseNav({ templates, selected, onSelect }: UseCaseNavProps) {
             <button
               type='button'
               onClick={() => onSelect(uc)}
-              className={`w-full text-left px-4 py-2 rounded-md transition \
-                ${
-                  uc === selected
-                    ? 'bg-primary text-white'
-                    : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
-                }`}
+              aria-current={uc === selected ? 'true' : undefined}
+              className={`w-full text-left px-4 py-2 rounded-md transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${
+                uc === selected
+                  ? 'bg-primary text-white'
+                  : 'text-gray-800 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600'
+              }`}
             >
-              {uc}
+              {uc
+                .split(' ')
+                .map((word) =>
+                  word
+                    .split('-')
+                    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+                    .join('-'),
+                )
+                .join(' ')}
             </button>
           </li>
         ))}

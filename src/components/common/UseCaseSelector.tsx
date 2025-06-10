@@ -19,13 +19,19 @@ export function UseCaseSelector({
   onChange,
 }: UseCaseSelectorProps) {
   return (
-    <Listbox value={selected} onChange={onChange} as='div' className='mb-6'>
+    <Listbox
+      value={selected}
+      onChange={onChange}
+      as='div'
+      className='mb-6'
+      aria-label='Filter by use case'
+    >
       <ListboxButton
         className='
         relative w-full cursor-default rounded-md
         border bg-white dark:bg-gray-700
         py-2 pl-3 pr-10 text-left
-        shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/50
+        shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
         sm:text-sm
       '
       >

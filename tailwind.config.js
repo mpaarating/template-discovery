@@ -8,6 +8,12 @@ export default {
         primary: '#1D4ED8', // blue-600
         secondary: '#10B981', // green-500
         accent: '#F59E0B', // amber-500
+        'gray-50': '#f9fafb',
+        'gray-800': '#1f2937',
+        placeholderGray: {
+          400: '#9ca3af',
+          500: '#6b7280',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui'],
@@ -27,12 +33,12 @@ export default {
         lg: '0.75rem', // 12px
       },
       boxShadow: {
-        lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        lg: '0 10px 15px -3px rgba(0,0,0,0.1)',
       },
       keyframes: {
         'logo-spin': {
-          from: { transform: 'rotate(0deg)' },
-          to: { transform: 'rotate(360deg)' },
+          from: {transform: 'rotate(0deg)'},
+          to: {transform: 'rotate(360deg)'},
         },
       },
       animation: {

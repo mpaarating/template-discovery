@@ -206,11 +206,16 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
           </button>
         </div>
       )}
-      <UseCaseSelector
-        options={useCases}
-        selected={useCase}
-        onChange={onUseCaseSelect}
-      />
+      <fieldset className='space-y-2'>
+        <legend className='block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300'>
+          Use case
+        </legend>
+        <UseCaseSelector
+          options={useCases}
+          selected={useCase}
+          onChange={onUseCaseSelect}
+        />
+      </fieldset>
       <div>
         <Listbox
           multiple
@@ -340,7 +345,7 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
               border border-gray-300 dark:border-gray-600
               rounded-md
               focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50
-              placeholder-gray-500
+              placeholder-gray-400 dark:placeholder-gray-500
             '
               placeholder='Search templates…'
               displayValue={(t: ZapTemplate) => t?.title ?? ''}
@@ -358,8 +363,9 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
             </ComboboxButton>
           </div>
 
-          {sorted.length > 0 && (
-            <ComboboxOptions className='absolute mt-1 w-full bg-white dark:bg-gray-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10'>
+          {/* Results list or empty state */}
+          <ComboboxOptions className='absolute mt-1 w-full bg-white dark:bg-gray-700 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-10'>
+            {sorted.length > 0 ? (
               <div className='h-60'>
                 <FixedSizeList
                   height={240}
@@ -403,16 +409,22 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
                   }}
                 </FixedSizeList>
               </div>
-            </ComboboxOptions>
-          )}
+            ) : (
+              <div className='h-60 flex items-center justify-center text-gray-500 dark:text-gray-400'>
+                No templates found
+              </div>
+            )}
+          </ComboboxOptions>
         </div>
       </Combobox>
-
-      {sorted.length === 0 && (
-        <div className='mt-1 w-full px-4 py-2 text-center text-gray-500 dark:text-gray-400'>
-          No templates found
-        </div>
-      )}
+      {/* Live region showing result counts */}
+      <div
+        role='status'
+        aria-live='polite'
+        className='text-sm text-gray-700 dark:text-gray-300'
+      >
+        Showing {sorted.length} of {templatesByUseCase.length} templates
+      </div>
     </div>
   );
 };

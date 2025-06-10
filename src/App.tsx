@@ -40,7 +40,7 @@ export default function App() {
         </header>
 
         <div className='flex h-full' id='maincontent'>
-          <aside className='w-64 border-r bg-white dark:bg-gray-800 p-4'>
+          <aside className='w-64 border-r bg-gray-50 dark:bg-gray-800 p-4'>
             <UseCaseNav
               templates={templates}
               selected={selectedUseCase}
@@ -67,8 +67,12 @@ export default function App() {
 
             <section className='bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg'>
               <Suspense fallback={<div>Loading details…</div>}>
-                {selectedTemplate && (
+                {selectedTemplate ? (
                   <TemplateDetailModal template={selectedTemplate} />
+                ) : (
+                  <div className='h-64 flex items-center justify-center text-gray-500 dark:text-gray-400'>
+                    Select a template to see details
+                  </div>
                 )}
               </Suspense>
             </section>
