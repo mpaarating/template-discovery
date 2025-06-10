@@ -1,22 +1,10 @@
-import {
-  Combobox,
-  Label,
-  Listbox,
-  ListboxButton,
-  ListboxOption,
-  ListboxOptions,
-} from '@headlessui/react';
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  CheckIcon,
-} from '@heroicons/react/24/outline';
+import { Combobox } from '@headlessui/react';
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/outline';
 import type { IFuseOptions } from 'fuse.js';
 import Fuse from 'fuse.js';
 import React, { useEffect, useMemo, useState } from 'react';
 import type { ZapTemplate } from '../types';
-import { SearchInput } from './common/SearchInput';
-import { UseCaseSelector } from './common/UseCaseSelector';
+import { FilterBar } from './FilterBar';
 import { TemplateList } from './common/TemplateList';
 
 interface TemplateSearchProps {
@@ -202,141 +190,22 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
           </button>
         </div>
       )}
-      <fieldset className='space-y-2'>
-        <legend className='block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300'>
-          Use case
-        </legend>
-        <UseCaseSelector
-          options={useCases}
-          selected={useCase}
-          onChange={onUseCaseSelect}
-        />
-      </fieldset>
-      <div>
-        <Listbox
-          multiple
-          value={selectedCategories}
-          onChange={setSelectedCategories}
-        >
-          <Label
-            htmlFor='filter-categories'
-            className='block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300'
-          >
-            Filter by categories
-          </Label>
-          <div className='relative w-full'>
-            <ListboxButton
-              id='filter-categories'
-              className='w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-md text-left'
-            >
-              {selectedCategories.length > 0
-                ? selectedCategories.join(', ')
-                : 'Filter by categories'}
-            </ListboxButton>
-            <ListboxOptions className='absolute mt-1 max-h-40 w-full overflow-auto bg-white dark:bg-gray-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10'>
-              {allCategories.map((category) => (
-                <ListboxOption
-                  key={category}
-                  value={category}
-                  className={({ focus }) =>
-                    `cursor-pointer select-none px-4 py-2 ${
-                      focus
-                        ? 'bg-primary/20 text-primary'
-                        : 'text-gray-900 dark:text-gray-100'
-                    }`
-                  }
-                >
-                  {({ selected }) => (
-                    <>
-                      <span className={`${selected ? 'font-semibold' : ''}`}>
-                        {category}{' '}
-                        {selected && (
-                          <CheckIcon
-                            className='h-5 w-5 text-primary inline-block'
-                            aria-hidden='true'
-                          />
-                        )}
-                      </span>
-                    </>
-                  )}
-                </ListboxOption>
-              ))}
-            </ListboxOptions>
-          </div>
-        </Listbox>
-      </div>
+      <FilterBar
+        useCases={useCases}
+        selectedUseCase={useCase}
+        onUseCaseChange={onUseCaseSelect}
+        categories={allCategories}
+        selectedCategories={selectedCategories}
+        onCategoriesChange={setSelectedCategories}
+        sortOptions={sortLabels}
+        selectedSort={sortBy}
+        onSortChange={setSortBy}
+        query={query}
+        onQueryChange={setQuery}
+        resultCount={sorted.length}
+      />
       <Combobox value={selectedTemplate} onChange={onTemplateSelect}>
-        <Listbox value={sortBy} onChange={setSortBy}>
-          <Label
-            htmlFor='sort-templates'
-            className='block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300'
-          >
-            Sort templates
-          </Label>
-          <div className='relative w-full'>
-            <ListboxButton
-              id='sort-templates'
-              className='w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-md text-left'
-            >
-              {sortLabels[sortBy]}
-            </ListboxButton>
-            <ListboxOptions className='absolute mt-1 max-h-40 w-full overflow-auto bg-white dark:bg-gray-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10'>
-              <ListboxOption
-                className={({ focus }) =>
-                  `cursor-pointer select-none px-4 py-2 ${
-                    focus
-                      ? 'bg-primary/20 text-primary'
-                      : 'text-gray-900 dark:text-gray-100'
-                  }`
-                }
-                value='popularity'
-              >
-                Popularity
-              </ListboxOption>
-              <ListboxOption
-                className={({ focus }) =>
-                  `cursor-pointer select-none px-4 py-2 ${
-                    focus
-                      ? 'bg-primary/20 text-primary'
-                      : 'text-gray-900 dark:text-gray-100'
-                  }`
-                }
-                value='setup_time'
-              >
-                Setup Time
-              </ListboxOption>
-              <ListboxOption
-                className={({ focus }) =>
-                  `cursor-pointer select-none px-4 py-2 ${
-                    focus
-                      ? 'bg-primary/20 text-primary'
-                      : 'text-gray-900 dark:text-gray-100'
-                  }`
-                }
-                value='complexity'
-              >
-                Complexity
-              </ListboxOption>
-            </ListboxOptions>
-          </div>
-        </Listbox>
-        <div className='relative w-full'>
-          <Label
-            htmlFor='template-search'
-            className='block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300'
-          >
-            Search templates {sorted.length > 0 ? `(${sorted.length})` : ''}
-            <span aria-live='polite' aria-atomic='true' className='sr-only'>
-              {sorted.length} results found
-            </span>
-          </Label>
-          <SearchInput
-            value={query}
-            onChange={setQuery}
-            resultCount={sorted.length}
-          />
-          <TemplateList sorted={sorted} onSelect={onTemplateSelect} />
-        </div>
+        <TemplateList sorted={sorted} onSelect={onTemplateSelect} />
       </Combobox>
       {/* Live region showing result counts */}
       <div
