@@ -21,17 +21,22 @@ import Fuse from 'fuse.js';
 import React, { useEffect, useMemo, useState } from 'react';
 import { FixedSizeList } from 'react-window';
 import type { ZapTemplate } from '../types';
+import { UseCaseSelector } from './common/UseCaseSelector';
 
 interface TemplateSearchProps {
   templates: ZapTemplate[];
   selectedTemplate: ZapTemplate | null;
   onTemplateSelect: (template: ZapTemplate) => void;
+  onUseCaseSelect: (useCase: string) => void;
+  useCase: string;
 }
 
 export const TemplateSearch: React.FC<TemplateSearchProps> = ({
   templates,
   selectedTemplate,
   onTemplateSelect,
+  onUseCaseSelect,
+  useCase,
 }) => {
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState(query);
@@ -39,6 +44,19 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
   const [sortBy, setSortBy] = useState<
     'popularity' | 'setup_time' | 'complexity'
   >('popularity');
+  // Filter templates by selected use case
+  const templatesByUseCase = useMemo(
+    () =>
+      useCase
+        ? templates.filter((t) => t.use_cases.includes(useCase))
+        : templates,
+    [templates, useCase],
+  );
+
+  const useCases = useMemo(
+    () => Array.from(new Set(templatesByUseCase.flatMap((t) => t.use_cases))),
+    [templatesByUseCase],
+  );
 
   const sortLabels = {
     popularity: (
@@ -117,8 +135,8 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
   }, [sortBy]);
 
   const allCategories = useMemo(
-    () => Array.from(new Set(templates.flatMap((t) => t.categories))),
-    [templates],
+    () => Array.from(new Set(templatesByUseCase.flatMap((t) => t.categories))),
+    [templatesByUseCase],
   );
 
   // Use Fuse.js for fuzzy search on the templates
@@ -128,13 +146,13 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
       threshold: 0.3,
       includeScore: true,
     };
-    return new Fuse<ZapTemplate>(templates, options);
-  }, [templates]);
+    return new Fuse<ZapTemplate>(templatesByUseCase, options);
+  }, [templatesByUseCase]);
 
   // Filter the templates based on the debouncedQuery and selectedCategories
   const filtered = React.useMemo(() => {
     const initial = !debouncedQuery
-      ? templates
+      ? templatesByUseCase
       : fuse.search(debouncedQuery).map((r) => r.item);
     return selectedCategories.length > 0
       ? initial.filter((t) =>
@@ -188,6 +206,11 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
           </button>
         </div>
       )}
+      <UseCaseSelector
+        options={useCases}
+        selected={useCase}
+        onChange={onUseCaseSelect}
+      />
       <div>
         <Listbox
           multiple
