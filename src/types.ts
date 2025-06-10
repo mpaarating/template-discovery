@@ -9,7 +9,7 @@ export interface ZapTemplate {
     color: string;
   }[];
   categories: string[];
-  complexity: "beginner" | "intermediate" | "advanced";
+  complexity: 'beginner' | 'intermediate' | 'advanced';
   popularity_score: number;
   setup_time_minutes: number;
   use_cases: string[];
