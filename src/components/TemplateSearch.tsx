@@ -1,15 +1,25 @@
-import React, { useState, useEffect } from "react";
-import type { ZapTemplate } from "../types";
 import {
   Combobox,
   ComboboxButton,
   ComboboxInput,
   ComboboxOption,
   ComboboxOptions,
+  Label,
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
 } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
-import Fuse from "fuse.js";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CheckIcon,
+  ChevronUpDownIcon,
+} from "@heroicons/react/24/outline";
 import type { IFuseOptions } from "fuse.js";
+import Fuse from "fuse.js";
+import React, { useEffect, useMemo, useState } from "react";
+import type { ZapTemplate } from "../types";
 
 interface TemplateSearchProps {
   templates: ZapTemplate[];
@@ -24,6 +34,40 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
 }) => {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [sortBy, setSortBy] = useState<
+    "popularity" | "setup_time" | "complexity"
+  >("popularity");
+
+  const sortLabels = {
+    popularity: (
+      <>
+        Popularity{" "}
+        <ArrowDownIcon
+          className="h-5 w-5 text-black-800 font-bold inline-block"
+          aria-hidden="true"
+        />
+      </>
+    ),
+    setup_time: (
+      <>
+        Fastest Setup{" "}
+        <ArrowUpIcon
+          className="h-5 w-5 text-black-800 font-bold inline-block"
+          aria-hidden="true"
+        />
+      </>
+    ),
+    complexity: (
+      <>
+        Complexity{" "}
+        <ArrowDownIcon
+          className="h-5 w-5 text-black-800 font-bold inline-block"
+          aria-hidden="true"
+        />
+      </>
+    ),
+  };
 
   // Initialize the query from the URL
   useEffect(() => {
@@ -31,6 +75,10 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
     const q = params.get("q") ?? "";
     setQuery(q);
     setDebouncedQuery(q);
+    const s =
+      (params.get("sort") as "popularity" | "setup_time" | "complexity") ??
+      "popularity";
+    setSortBy(s);
   }, []);
 
   // Debounce the query
@@ -47,12 +95,30 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
     if (query) params.set("q", query);
     else params.delete("q");
     const newQuery = params.toString();
-    window.history.pushState(
+    window.history.replaceState(
       null,
       "",
       newQuery ? `?${newQuery}` : window.location.pathname
     );
   }, [query]);
+
+  // Update the URL with the sortBy
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (sortBy) params.set("sort", sortBy);
+    else params.delete("sort");
+    const newSearch = params.toString();
+    window.history.replaceState(
+      null,
+      "",
+      newSearch ? `?${newSearch}` : window.location.pathname
+    );
+  }, [sortBy]);
+
+  const allCategories = useMemo(
+    () => Array.from(new Set(templates.flatMap((t) => t.categories))),
+    [templates]
+  );
 
   // Use Fuse.js for fuzzy search on the templates
   const fuse = React.useMemo(() => {
@@ -64,75 +130,238 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
     return new Fuse<ZapTemplate>(templates, options);
   }, [templates]);
 
-  // Filter the templates based on the query
+  // Filter the templates based on the debouncedQuery and selectedCategories
   const filtered = React.useMemo(() => {
-    if (!debouncedQuery) return templates;
-    // perform fuzzy search
-    return fuse.search(debouncedQuery).map((result) => result.item);
-  }, [debouncedQuery, fuse, templates]);
+    const initial = !debouncedQuery
+      ? templates
+      : fuse.search(debouncedQuery).map((r) => r.item);
+    return selectedCategories.length > 0
+      ? initial.filter((t) =>
+          selectedCategories.every((cat) => t.categories.includes(cat))
+        )
+      : initial;
+  }, [debouncedQuery, fuse, templates, selectedCategories]);
+
+  const sorted = useMemo(() => {
+    const items = [...filtered];
+
+    switch (sortBy) {
+      case "popularity":
+        // descending popularity_score
+        items.sort((a, b) => b.popularity_score - a.popularity_score);
+        break;
+      case "setup_time":
+        // ascending setup_time_minutes
+        items.sort((a, b) => a.setup_time_minutes - b.setup_time_minutes);
+        break;
+      case "complexity": {
+        // map levels to numbers: { beginner: 0, intermediate: 1, advanced: 2 }
+        const order = { beginner: 0, intermediate: 1, advanced: 2 };
+        items.sort((a, b) => order[a.complexity] - order[b.complexity]);
+        break;
+      }
+    }
+
+    return items;
+  }, [filtered, sortBy]);
+
+  // show Clear All when any filter/search/sort is active
+  const hasActiveFilters =
+    query !== "" || selectedCategories.length > 0 || sortBy !== "popularity";
+  const clearAll = () => {
+    setQuery("");
+    setSelectedCategories([]);
+    setSortBy("popularity");
+  };
 
   return (
-    <div className="space-y-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-      <Combobox value={selectedTemplate} onChange={onTemplateSelect}>
-        <div className="relative">
-          <ComboboxInput
-            className="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
-            placeholder="Search templates…"
-            aria-label="Search templates"
-            displayValue={(template: ZapTemplate) => template?.title ?? ""}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-
-          <ComboboxButton className="absolute inset-y-0 right-0 flex items-center pr-2">
-            <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden />
-          </ComboboxButton>
-
-          {filtered.length > 0 && (
-            <ComboboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded bg-white dark:bg-gray-700 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
-              {filtered.map((t) => (
-                <ComboboxOption
-                  key={t.id}
-                  value={t}
+    <div className="w-full space-y-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+      {hasActiveFilters && (
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={clearAll}
+            className="text-sm text-primary  font-bolddark:text-primary bg-gray-200 dark:bg-gray-700 rounded-md px-4 py-2"
+          >
+            Clear all
+          </button>
+        </div>
+      )}
+      <div>
+        <Listbox
+          multiple
+          value={selectedCategories}
+          onChange={setSelectedCategories}
+        >
+          <Label
+            htmlFor="filter-categories"
+            className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
+            Filter by categories
+          </Label>
+          <div className="relative w-full">
+            <ListboxButton className="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-md text-left">
+              {selectedCategories.length > 0
+                ? selectedCategories.join(", ")
+                : "Filter by categories"}
+            </ListboxButton>
+            <ListboxOptions className="absolute mt-1 max-h-40 w-full overflow-auto bg-white dark:bg-gray-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10">
+              {allCategories.map((category) => (
+                <ListboxOption
+                  key={category}
+                  value={category}
                   className={({ focus }) =>
-                    `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
+                    `cursor-pointer select-none px-4 py-2 ${
                       focus
-                        ? "bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary"
+                        ? "bg-primary/20 text-primary"
                         : "text-gray-900 dark:text-gray-100"
                     }`
                   }
                 >
-                  {({ selected: isSelected, focus }) => (
+                  {({ selected }) => (
+                    <>
+                      <span className={`${selected ? "font-semibold" : ""}`}>
+                        {category}{" "}
+                        {selected && (
+                          <CheckIcon
+                            className="h-5 w-5 text-primary inline-block"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </span>
+                    </>
+                  )}
+                </ListboxOption>
+              ))}
+            </ListboxOptions>
+          </div>
+        </Listbox>
+      </div>
+      <Combobox value={selectedTemplate} onChange={onTemplateSelect}>
+        <Listbox value={sortBy} onChange={setSortBy}>
+          <Label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+            Sort templates
+          </Label>
+          <div className="relative w-full">
+            <ListboxButton className="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-md text-left">
+              {sortLabels[sortBy]}
+            </ListboxButton>
+            <ListboxOptions className="absolute mt-1 max-h-40 w-full overflow-auto bg-white dark:bg-gray-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10">
+              <ListboxOption
+                className={({ focus }) =>
+                  `cursor-pointer select-none px-4 py-2 ${
+                    focus
+                      ? "bg-primary/20 text-primary"
+                      : "text-gray-900 dark:text-gray-100"
+                  }`
+                }
+                value="popularity"
+              >
+                Popularity
+              </ListboxOption>
+              <ListboxOption
+                className={({ focus }) =>
+                  `cursor-pointer select-none px-4 py-2 ${
+                    focus
+                      ? "bg-primary/20 text-primary"
+                      : "text-gray-900 dark:text-gray-100"
+                  }`
+                }
+                value="setup_time"
+              >
+                Setup Time
+              </ListboxOption>
+              <ListboxOption
+                className={({ focus }) =>
+                  `cursor-pointer select-none px-4 py-2 ${
+                    focus
+                      ? "bg-primary/20 text-primary"
+                      : "text-gray-900 dark:text-gray-100"
+                  }`
+                }
+                value="complexity"
+              >
+                Complexity
+              </ListboxOption>
+            </ListboxOptions>
+          </div>
+        </Listbox>
+        <div className="relative w-full">
+          <Label
+            htmlFor="template-search"
+            className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
+            Search templates {sorted.length > 0 ? `(${sorted.length})` : ""}
+          </Label>
+          <div className="relative w-full">
+            <ComboboxInput
+              id="template-search"
+              className="
+              w-full
+              px-4 py-3
+              bg-gray-100 dark:bg-gray-700
+              text-gray-900 dark:text-gray-100
+              border border-gray-300 dark:border-gray-600
+              rounded-md
+              focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50
+              placeholder-gray-400
+            "
+              placeholder="Search templates…"
+              displayValue={(t: ZapTemplate) => t?.title ?? ""}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+
+            <ComboboxButton className="absolute inset-y-0 right-0 flex items-center p-2  h-full">
+              <ChevronUpDownIcon
+                className="h-5 w-5 text-gray-400"
+                aria-hidden
+              />
+            </ComboboxButton>
+          </div>
+
+          {sorted.length > 0 && (
+            <ComboboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto bg-white dark:bg-gray-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10">
+              {sorted.map((t) => (
+                <ComboboxOption
+                  key={t.id}
+                  value={t}
+                  className={({ focus }) =>
+                    `relative cursor-pointer select-none py-2 px-4 ${
+                      focus
+                        ? "bg-primary/20 text-primary dark:bg-primary/20 dark:text-primary"
+                        : "text-gray-900 dark:text-gray-100"
+                    }`
+                  }
+                >
+                  {({ selected: isSelected }) => (
                     <>
                       <span
                         className={`block truncate ${
                           isSelected ? "font-semibold" : "font-normal"
                         }`}
                       >
-                        {t.title}
+                        {t.title}{" "}
+                        {isSelected && (
+                          <CheckIcon
+                            className="h-5 w-5 text-primary inline-block"
+                            aria-hidden="true"
+                          />
+                        )}
                       </span>
-                      {isSelected && (
-                        <span
-                          className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                            focus ? "text-primary" : "text-gray-600"
-                          }`}
-                        >
-                          <CheckIcon className="h-5 w-5" aria-hidden />
-                        </span>
-                      )}
                     </>
                   )}
                 </ComboboxOption>
               ))}
             </ComboboxOptions>
           )}
-
-          {filtered.length === 0 && (
-            <div className="absolute mt-1 w-full px-4 py-2 text-gray-500">
-              No templates found
-            </div>
-          )}
         </div>
       </Combobox>
+
+      {sorted.length === 0 && (
+        <div className="mt-1 w-full px-4 py-2 text-center text-gray-500 dark:text-gray-400">
+          No templates found
+        </div>
+      )}
     </div>
   );
 };
