@@ -1,5 +1,6 @@
 import React from 'react';
 import { Listbox } from '@headlessui/react';
+import { CheckIcon } from '@heroicons/react/24/outline';
 
 export interface CategoryMultiSelectProps {
   options: string[];
@@ -33,7 +34,7 @@ export function CategoryMultiSelect({
               key={value}
               value={value}
               className={({ active }) =>
-                `cursor-pointer select-none px-4 py-2 ${
+                `relative cursor-pointer select-none px-4 py-2 ${
                   active
                     ? 'bg-primary/20 text-primary'
                     : 'text-gray-900 dark:text-gray-100'
@@ -41,9 +42,18 @@ export function CategoryMultiSelect({
               }
             >
               {({ selected: isSelected }) => (
-                <span className={isSelected ? 'font-semibold' : 'font-normal'}>
-                  {value}
-                </span>
+                <>
+                  <span
+                    className={isSelected ? 'font-semibold' : 'font-normal'}
+                  >
+                    {value}
+                  </span>
+                  {isSelected && (
+                    <span className='absolute inset-y-0 right-4 flex items-center text-primary'>
+                      <CheckIcon className='h-5 w-5' aria-hidden='true' />
+                    </span>
+                  )}
+                </>
               )}
             </Listbox.Option>
           ))}
