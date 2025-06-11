@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function PageSkeleton() {
   return (
     <div className='min-h-screen w-full bg-gray-100 dark:bg-gray-900 animate-pulse'>

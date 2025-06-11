@@ -23,27 +23,27 @@ export function TemplateList({ sorted, onSelect }: TemplateListProps) {
           overscanCount={10}
         >
           {({ index, style }) => {
-            const tpl = sorted[index];
+            const template = sorted[index];
             return (
               <ComboboxOption
-                key={tpl.id}
-                value={tpl}
+                key={template.id}
+                value={template}
                 style={style}
-                className={({ active }) =>
+                className={({ focus }) =>
                   `relative cursor-pointer select-none py-2 px-4 ${
-                    active
+                    focus
                       ? 'bg-primary/20 text-primary dark:bg-primary/20 dark:text-primary'
                       : 'text-gray-900 dark:text-gray-100'
                   }`
                 }
-                onClick={() => onSelect(tpl)}
+                onClick={() => onSelect(template)}
               >
                 {({ selected }) => (
                   <>
                     <span
                       className={selected ? 'font-semibold' : 'font-normal'}
                     >
-                      {tpl.title}
+                      {template.title}
                     </span>
                     {selected && (
                       <span className='absolute inset-y-0 right-4 flex items-center text-primary'>

@@ -33,7 +33,7 @@ function wrapPromise<T>(promise: Promise<T>) {
 // Simulate a network fetch with a timeout
 const fetchTemplates = () =>
   new Promise<ZapTemplate[]>((resolve) => {
-    setTimeout(() => resolve(rawData as ZapTemplate[]), 1000); // 1s delay
+    setTimeout(() => resolve(rawData as ZapTemplate[]), 2000);
   });
 
 export const templatesResource = wrapPromise(fetchTemplates());

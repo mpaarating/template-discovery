@@ -1,4 +1,3 @@
-import React from 'react';
 import { Listbox } from '@headlessui/react';
 import { CheckIcon } from '@heroicons/react/24/outline';
 

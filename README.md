@@ -1,54 +1,73 @@
-# React + TypeScript + Vite
+# Template Discovery
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive React application for browsing and discovering workflow templates. It allows you to:
 
-Currently, two official plugins are available:
+• Search templates with fuzzy matching  
+• Filter by use-case, category, popularity, setup-time and complexity  
+• Inspect the full step-by-step recipe for any template in a modal
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Built with **Vite + React 19 + TypeScript** and styled with **Tailwind CSS** & **Headless UI**.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Quick-start
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+1. **Clone & install**
+
+   ```bash
+   git clone git@github.com:YOUR_USERNAME/template-discovery.git
+   cd template-discovery
+   npm install    # or pnpm install / yarn install
+   ```
+
+2. **Run the dev server**
+
+   ```bash
+   npm run dev
+   ```
+
+   Vite will print a local URL (typically <http://localhost:5173>) – open it in the browser to start exploring templates.
+
+---
+
+## Other npm scripts
+
+| Command           | Purpose                                  |
+| ----------------- | ---------------------------------------- |
+| `npm run build`   | Generate a production build into `dist/` |
+| `npm run preview` | Serve the build locally for QA           |
+| `npm run lint`    | ESLint + TypeScript checks               |
+
+---
+
+## Project structure
+
+```tree
+├── src
+│   ├── components   # Presentational & composite React components
+│   ├── hooks        # Re-usable hooks (data loading, etc.)
+│   ├── data         # JSON dataset with all templates
+│   └── index.css    # Tailwind layer directives
+├── public           # Files copied verbatim to the build
+├── tailwind.config.js
+├── vite.config.ts
+└── …
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Data set
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+`src/data/templates.large.json` (≈1.7 MB) is loaded client-side. The custom hook `useTemplates` fakes a network request with a one-second delay so that Suspense states can be demonstrated without the need for a real API.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
-```
+If you prefer to point the UI at a real endpoint, swap out the implementation inside `src/hooks/useTemplates.ts`.
+
+---
+
+## Browser support
+
+Modern evergreen browsers. No effort has been spent on IE11 or other legacy engines.
+
+---
+
+## License
+
+MIT © 2025 Alex Lewis

@@ -1,6 +1,12 @@
-import { Fragment, useState } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  Transition,
+  TransitionChild,
+} from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { Fragment, useState } from 'react';
 import type { ZapTemplate } from '../../types';
 
 interface TemplateDetailsModalProps {
@@ -14,12 +20,7 @@ export const TemplateDetailsModal: React.FC<TemplateDetailsModalProps> = ({
   isOpen,
   onClose,
 }) => {
-  // Gracefully handle null template
-  const steps: string[] = template?.steps ?? [];
-  const visibleSteps = steps.slice(0, 4);
-  const hiddenStepsCount = steps.length - visibleSteps.length;
-
-  // Reusable app logo that falls back to a colored circle when the logo URL is missing or fails to load
+  // Since there aren't any real app logos, we'll use a placeholder
   const AppLogo: React.FC<{ name: string; iconUrl: string }> = ({
     name,
     iconUrl,
@@ -49,8 +50,7 @@ export const TemplateDetailsModal: React.FC<TemplateDetailsModalProps> = ({
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as='div' className='relative z-50' onClose={onClose}>
-        {/* Backdrop */}
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter='ease-out duration-300'
           enterFrom='opacity-0'
@@ -60,12 +60,11 @@ export const TemplateDetailsModal: React.FC<TemplateDetailsModalProps> = ({
           leaveTo='opacity-0'
         >
           <div className='fixed inset-0 bg-black/50' aria-hidden='true' />
-        </Transition.Child>
+        </TransitionChild>
 
         <div className='fixed inset-0 overflow-y-auto'>
           <div className='flex min-h-full items-center justify-center p-4 text-center'>
-            {/* Modal panel */}
-            <Transition.Child
+            <TransitionChild
               as={Fragment}
               enter='ease-out duration-300'
               enterFrom='opacity-0 scale-95'
@@ -74,16 +73,15 @@ export const TemplateDetailsModal: React.FC<TemplateDetailsModalProps> = ({
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'
             >
-              <Dialog.Panel className='w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-6 text-left align-middle shadow-xl transition-all'>
-                {/* Header */}
+              <DialogPanel className='w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-6 text-left align-middle shadow-xl transition-all'>
                 <div className='flex items-start justify-between'>
                   <div>
-                    <Dialog.Title
+                    <DialogTitle
                       as='h3'
                       className='text-lg font-bold leading-6 text-gray-900 dark:text-gray-100'
                     >
                       {template?.title ?? ''}
-                    </Dialog.Title>
+                    </DialogTitle>
                     {template?.description && (
                       <p className='mt-1 text-sm text-gray-600 dark:text-gray-300'>
                         {template.description}
@@ -100,7 +98,6 @@ export const TemplateDetailsModal: React.FC<TemplateDetailsModalProps> = ({
                   </button>
                 </div>
 
-                {/* Section: Apps */}
                 {template?.apps && template.apps.length > 0 && (
                   <div className='mt-6'>
                     <h4 className='mb-2 text-sm font-semibold text-gray-900 dark:text-gray-100'>
@@ -119,7 +116,6 @@ export const TemplateDetailsModal: React.FC<TemplateDetailsModalProps> = ({
                   </div>
                 )}
 
-                {/* Section: Metadata */}
                 {template && (
                   <div className='mt-6'>
                     <h4 className='mb-2 text-sm font-semibold text-gray-900 dark:text-gray-100'>
@@ -143,27 +139,6 @@ export const TemplateDetailsModal: React.FC<TemplateDetailsModalProps> = ({
                     </div>
                   </div>
                 )}
-
-                {/* Section: Steps preview */}
-                {visibleSteps.length > 0 && (
-                  <div className='mt-6'>
-                    <h4 className='mb-2 text-sm font-semibold text-gray-900 dark:text-gray-100'>
-                      Steps preview
-                    </h4>
-                    <ol className='list-decimal pl-5 space-y-1 text-sm text-gray-700 dark:text-gray-300'>
-                      {visibleSteps.map((step, idx) => (
-                        <li key={idx}>{step}</li>
-                      ))}
-                      {hiddenStepsCount > 0 && (
-                        <li className='italic text-gray-500 dark:text-gray-400'>
-                          … +{hiddenStepsCount} more steps
-                        </li>
-                      )}
-                    </ol>
-                  </div>
-                )}
-
-                {/* Footer */}
                 <div className='mt-8 flex justify-end gap-3'>
                   <button
                     type='button'
@@ -179,8 +154,8 @@ export const TemplateDetailsModal: React.FC<TemplateDetailsModalProps> = ({
                     Use this template
                   </button>
                 </div>
-              </Dialog.Panel>
-            </Transition.Child>
+              </DialogPanel>
+            </TransitionChild>
           </div>
         </div>
       </Dialog>

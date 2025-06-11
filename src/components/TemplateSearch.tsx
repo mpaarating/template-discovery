@@ -5,9 +5,9 @@ import Fuse from 'fuse.js';
 import React, { useEffect, useMemo, useState } from 'react';
 import type { ZapTemplate } from '../types';
 import { FilterBar } from './common/FilterBar';
+import { TemplateDetailsModal } from './common/TemplateDetailsModal';
 import { TemplateList } from './common/TemplateList';
 import { UseCaseHero } from './common/UseCaseHero';
-import { TemplateDetailsModal } from './common/TemplateDetailsModal';
 
 interface TemplateSearchProps {
   templates: ZapTemplate[];
@@ -18,7 +18,6 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
   templates,
   useCase,
 }) => {
-  // Local state for modal handling
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTemplate, setModalTemplate] = useState<ZapTemplate | null>(null);
 
@@ -29,7 +28,6 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
     'popularity' | 'setup_time' | 'complexity'
   >('popularity');
 
-  // Control visibility of the template dropdown
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleTemplateSelect = (tpl: ZapTemplate) => {
@@ -38,7 +36,6 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
     setIsDropdownOpen(false);
   };
 
-  // Close dropdown on click outside or on Escape key press
   const comboboxRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -65,7 +62,6 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
     };
   }, []);
 
-  // Filter templates by selected use case
   const templatesByUseCase = useMemo(
     () =>
       useCase
@@ -116,7 +112,6 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
     setSortBy(s);
   }, []);
 
-  // Debounce the query
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDebouncedQuery(query);
@@ -156,6 +151,7 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
   );
 
   // Use Fuse.js for fuzzy search on the templates
+  // Could have used microfuzz instead, but Fuse.js is more mature and has more features
   const fuse = React.useMemo(() => {
     const options: IFuseOptions<ZapTemplate> = {
       keys: ['title', 'description', 'apps.name', 'categories', 'use_cases'],
@@ -254,7 +250,6 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
       </div>
       <UseCaseHero useCase={useCase} />
 
-      {/* Template details modal */}
       <TemplateDetailsModal
         template={modalTemplate}
         isOpen={modalOpen}
