@@ -2,6 +2,8 @@
 
 An interactive React application for browsing and discovering workflow templates. It allows you to:
 
+[![Image from Gyazo](https://i.gyazo.com/92c765126ec32df5516bcb9f8bd8c481.gif)](https://gyazo.com/92c765126ec32df5516bcb9f8bd8c481)
+
 • Search templates with fuzzy matching  
 • Filter by use-case, category, popularity, setup-time and complexity  
 • Inspect the full step-by-step recipe for any template in a modal
