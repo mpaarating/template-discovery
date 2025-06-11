@@ -1,16 +1,16 @@
-import React from 'react';
 import {
   Listbox,
+  Label,
   ListboxButton,
   ListboxOptions,
   ListboxOption,
 } from '@headlessui/react';
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/outline';
+import { CheckIcon } from '@heroicons/react/20/solid';
 
-interface UseCaseSelectorProps {
+export interface UseCaseSelectorProps {
   options: string[];
   selected: string;
-  onChange: (value: string) => void;
+  onChange: (useCase: string) => void;
 }
 
 export function UseCaseSelector({
@@ -19,104 +19,41 @@ export function UseCaseSelector({
   onChange,
 }: UseCaseSelectorProps) {
   return (
-    <Listbox
-      value={selected}
-      onChange={onChange}
-      as='div'
-      className='mb-6 w-full'
-      aria-label='Filter by use case'
-    >
-      <ListboxButton
-        className='
-        relative w-full cursor-default rounded-md
-        border bg-white dark:bg-gray-700
-        py-2 pl-3 pr-10 text-left
-        shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
-        sm:text-sm
-      '
-      >
-        <span className='block truncate'>{selected || 'All Use Cases'}</span>
-        <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
-          <ChevronUpDownIcon
-            className='h-5 w-5 text-gray-400'
-            aria-hidden='true'
-          />
-        </span>
-      </ListboxButton>
-
-      <ListboxOptions
-        className='
-        absolute z-10 mt-1 max-h-60 w-full
-        overflow-auto rounded-md
-        bg-white dark:bg-gray-800
-        py-1 text-base shadow-lg
-        ring-1 ring-black ring-opacity-5
-        focus:outline-none sm:text-sm
-      '
-      >
-        <ListboxOption
-          value=''
-          className={({ active }) =>
-            `relative cursor-default select-none py-2 pl-10 pr-4 ${
-              active
-                ? 'bg-primary/10 text-primary'
-                : 'text-gray-900 dark:text-gray-100'
-            }`
-          }
+    <fieldset>
+      <Label htmlFor='use-case-selector'>Use case</Label>
+      <Listbox value={selected} onChange={onChange}>
+        <ListboxButton
+          id='use-case-selector'
+          className='w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-md text-left'
         >
-          {({ selected, active }) => (
-            <>
-              <span
-                className={`block truncate ${selected ? 'font-semibold' : ''}`}
-              >
-                All Use Cases
-              </span>
-              {selected && (
-                <span
-                  className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                    active ? 'text-primary' : 'text-gray-400'
+          {selected || 'Select a use case'}
+        </ListboxButton>
+        <ListboxOptions className='absolute mt-1 w-full overflow-auto bg-white dark:bg-gray-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10'>
+          {options.map((useCase) => (
+            <ListboxOption key={useCase} value={useCase}>
+              {({ focus, selected }) => (
+                <div
+                  className={`cursor-pointer select-none px-4 py-2 ${
+                    focus
+                      ? 'bg-primary/20 text-primary'
+                      : 'text-gray-900 dark:text-gray-100'
                   }`}
                 >
-                  <CheckIcon className='h-5 w-5' aria-hidden='true' />
-                </span>
-              )}
-            </>
-          )}
-        </ListboxOption>
-
-        {options.map((uc) => (
-          <ListboxOption
-            key={uc}
-            value={uc}
-            className={({ focus }) =>
-              `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                focus
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-gray-900 dark:text-gray-100'
-              }`
-            }
-          >
-            {({ selected, focus }) => (
-              <>
-                <span
-                  className={`block truncate ${selected ? 'font-semibold' : ''}`}
-                >
-                  {uc}
-                </span>
-                {selected && (
-                  <span
-                    className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                      focus ? 'text-primary' : 'text-gray-400'
-                    }`}
-                  >
-                    <CheckIcon className='h-5 w-5' aria-hidden='true' />
+                  <span className={selected ? 'font-semibold' : 'font-normal'}>
+                    {useCase}
                   </span>
-                )}
-              </>
-            )}
-          </ListboxOption>
-        ))}
-      </ListboxOptions>
-    </Listbox>
+                  {selected && (
+                    <CheckIcon
+                      className='h-5 w-5 text-primary inline-block'
+                      aria-hidden='true'
+                    />
+                  )}
+                </div>
+              )}
+            </ListboxOption>
+          ))}
+        </ListboxOptions>
+      </Listbox>
+    </fieldset>
   );
 }

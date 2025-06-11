@@ -4,23 +4,24 @@ import type { IFuseOptions } from 'fuse.js';
 import Fuse from 'fuse.js';
 import React, { useEffect, useMemo, useState } from 'react';
 import type { ZapTemplate } from '../types';
-import { FilterBar } from './FilterBar';
+import { FilterBar } from './common/FilterBar';
 import { TemplateList } from './common/TemplateList';
 import { UseCaseHero } from './common/UseCaseHero';
+import { TemplateDetailsModal } from './common/TemplateDetailsModal';
 
 interface TemplateSearchProps {
   templates: ZapTemplate[];
-  selectedTemplate: ZapTemplate | null;
-  onTemplateSelect: (template: ZapTemplate) => void;
   useCase: string;
 }
 
 export const TemplateSearch: React.FC<TemplateSearchProps> = ({
   templates,
-  selectedTemplate,
-  onTemplateSelect,
   useCase,
 }) => {
+  // Local state for modal handling
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalTemplate, setModalTemplate] = useState<ZapTemplate | null>(null);
+
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState(query);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -32,7 +33,8 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleTemplateSelect = (tpl: ZapTemplate) => {
-    onTemplateSelect(tpl);
+    setModalTemplate(tpl);
+    setModalOpen(true);
     setIsDropdownOpen(false);
   };
 
@@ -244,13 +246,20 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
           }
         }}
       >
-        <Combobox value={selectedTemplate} onChange={handleTemplateSelect}>
+        <Combobox value={modalTemplate} onChange={handleTemplateSelect}>
           {isDropdownOpen && (
             <TemplateList sorted={sorted} onSelect={handleTemplateSelect} />
           )}
         </Combobox>
       </div>
       <UseCaseHero useCase={useCase} />
+
+      {/* Template details modal */}
+      <TemplateDetailsModal
+        template={modalTemplate}
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   );
 };

@@ -1,5 +1,4 @@
-import React from 'react';
-import type { ZapTemplate } from '../types';
+import type { ZapTemplate } from '../../types';
 
 interface TemplateCardProps {
   template: ZapTemplate;

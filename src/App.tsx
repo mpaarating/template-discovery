@@ -1,27 +1,17 @@
 import React, { Suspense, useState } from 'react';
 import { useTemplates } from './hooks/useTemplates';
-import type { ZapTemplate } from './types';
-import { PageSkeleton } from './components/PageSkeleton';
+import { PageSkeleton } from './components/common/PageSkeleton';
 import { UseCaseNav } from './components/UseCaseNav';
-// import { UseCaseHero } from './components/UseCaseHero';
 
 const TemplateSearch = React.lazy(() =>
   import('./components/TemplateSearch').then((module) => ({
     default: module.TemplateSearch,
   })),
 );
-const TemplateDetailModal = React.lazy(() =>
-  import('./components/TemplateDetailModal').then((module) => ({
-    default: module.TemplateDetailModal,
-  })),
-);
 
 export default function App() {
   const templates = useTemplates();
 
-  const [selectedTemplate, setSelectedTemplate] = useState<ZapTemplate | null>(
-    null,
-  );
   const [selectedUseCase, setSelectedUseCase] = useState<string>('');
 
   return (
@@ -56,22 +46,8 @@ export default function App() {
                       )
                     : templates
                 }
-                selectedTemplate={selectedTemplate}
-                onTemplateSelect={setSelectedTemplate}
                 useCase={selectedUseCase}
               />
-            </section>
-
-            <section className='bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg'>
-              <Suspense fallback={<div>Loading details…</div>}>
-                {selectedTemplate ? (
-                  <TemplateDetailModal template={selectedTemplate} />
-                ) : (
-                  <div className='h-64 flex items-center justify-center text-gray-500 dark:text-gray-400'>
-                    Select a template to see details
-                  </div>
-                )}
-              </Suspense>
             </section>
           </main>
         </div>

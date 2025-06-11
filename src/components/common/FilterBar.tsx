@@ -1,7 +1,7 @@
 import React from 'react';
-import { SearchInput } from './common/SearchInput';
-import { SortBySelector } from './common/SortBySelector';
-import { CategoryMultiSelect } from './common/CategoryMultiSelect';
+import { SearchInput } from './SearchInput';
+import { SortBySelector } from './SortBySelector';
+import { CategoryMultiSelect } from './CategoryMultiSelect';
 
 interface FilterBarProps<T extends string> {
   categories: string[];

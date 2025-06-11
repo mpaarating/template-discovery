@@ -14,4 +14,6 @@ export interface ZapTemplate {
   setup_time_minutes: number;
   use_cases: string[];
   created_at: string;
+  /** Optional ordered list of step descriptions for the template */
+  steps?: string[];
 }
