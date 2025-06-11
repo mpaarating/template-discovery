@@ -6,12 +6,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 import type { ZapTemplate } from '../types';
 import { FilterBar } from './FilterBar';
 import { TemplateList } from './common/TemplateList';
+import { UseCaseHero } from './common/UseCaseHero';
 
 interface TemplateSearchProps {
   templates: ZapTemplate[];
   selectedTemplate: ZapTemplate | null;
   onTemplateSelect: (template: ZapTemplate) => void;
-  onUseCaseSelect: (useCase: string) => void;
   useCase: string;
 }
 
@@ -19,7 +19,6 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
   templates,
   selectedTemplate,
   onTemplateSelect,
-  onUseCaseSelect,
   useCase,
 }) => {
   const [query, setQuery] = useState('');
@@ -28,6 +27,42 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
   const [sortBy, setSortBy] = useState<
     'popularity' | 'setup_time' | 'complexity'
   >('popularity');
+
+  // Control visibility of the template dropdown
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleTemplateSelect = (tpl: ZapTemplate) => {
+    onTemplateSelect(tpl);
+    setIsDropdownOpen(false);
+  };
+
+  // Close dropdown on click outside or on Escape key press
+  const comboboxRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        comboboxRef.current &&
+        !comboboxRef.current.contains(e.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    }
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        setIsDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   // Filter templates by selected use case
   const templatesByUseCase = useMemo(
     () =>
@@ -35,11 +70,6 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
         ? templates.filter((t) => t.use_cases.includes(useCase))
         : templates,
     [templates, useCase],
-  );
-
-  const useCases = useMemo(
-    () => Array.from(new Set(templatesByUseCase.flatMap((t) => t.use_cases))),
-    [templatesByUseCase],
   );
 
   const sortLabels = {
@@ -177,23 +207,22 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
     setSortBy('popularity');
   };
 
+  // Reset category filters when the parent use-case changes so filters stay relevant
+  useEffect(() => {
+    setSelectedCategories([]);
+  }, [useCase]);
+
   return (
     <div className='w-full space-y-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg'>
       {hasActiveFilters && (
-        <div className='flex justify-end'>
-          <button
-            type='button'
-            onClick={clearAll}
-            className='text-sm text-primary  font-bolddark:text-primary bg-gray-200 dark:bg-gray-700 rounded-md px-4 py-2'
-          >
-            Clear all
-          </button>
-        </div>
+        <button
+          onClick={clearAll}
+          className='text-sm text-primary font-bold bg-gray-200 dark:bg-gray-700 rounded-md px-4 py-2'
+        >
+          Clear all
+        </button>
       )}
       <FilterBar
-        useCases={useCases}
-        selectedUseCase={useCase}
-        onUseCaseChange={onUseCaseSelect}
         categories={allCategories}
         selectedCategories={selectedCategories}
         onCategoriesChange={setSelectedCategories}
@@ -203,18 +232,25 @@ export const TemplateSearch: React.FC<TemplateSearchProps> = ({
         query={query}
         onQueryChange={setQuery}
         resultCount={sorted.length}
+        onInputFocus={() => setIsDropdownOpen(true)}
+        onToggleDropdown={() => setIsDropdownOpen((prev) => !prev)}
       />
-      <Combobox value={selectedTemplate} onChange={onTemplateSelect}>
-        <TemplateList sorted={sorted} onSelect={onTemplateSelect} />
-      </Combobox>
-      {/* Live region showing result counts */}
       <div
-        role='status'
-        aria-live='polite'
-        className='text-sm text-gray-700 dark:text-gray-300'
+        ref={comboboxRef}
+        className='relative w-full'
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') {
+            setIsDropdownOpen(false);
+          }
+        }}
       >
-        Showing {sorted.length} of {templatesByUseCase.length} templates
+        <Combobox value={selectedTemplate} onChange={handleTemplateSelect}>
+          {isDropdownOpen && (
+            <TemplateList sorted={sorted} onSelect={handleTemplateSelect} />
+          )}
+        </Combobox>
       </div>
+      <UseCaseHero useCase={useCase} />
     </div>
   );
 };

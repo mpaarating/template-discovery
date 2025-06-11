@@ -1,13 +1,9 @@
 import React from 'react';
-import { UseCaseSelector } from './UseCaseSelector';
-import { CategoryMultiSelect } from './CategoryMultiSelect';
-import { SortBySelector } from './common/SortBySelector';
 import { SearchInput } from './common/SearchInput';
+import { SortBySelector } from './common/SortBySelector';
+import { CategoryMultiSelect } from './common/CategoryMultiSelect';
 
 interface FilterBarProps<T extends string> {
-  useCases: string[];
-  selectedUseCase: string;
-  onUseCaseChange: (useCase: string) => void;
   categories: string[];
   selectedCategories: string[];
   onCategoriesChange: (cats: string[]) => void;
@@ -17,12 +13,11 @@ interface FilterBarProps<T extends string> {
   query: string;
   onQueryChange: (q: string) => void;
   resultCount: number;
+  onInputFocus?: () => void;
+  onToggleDropdown?: () => void;
 }
 
 export function FilterBar<T extends string>({
-  useCases,
-  selectedUseCase,
-  onUseCaseChange,
   categories,
   selectedCategories,
   onCategoriesChange,
@@ -32,14 +27,11 @@ export function FilterBar<T extends string>({
   query,
   onQueryChange,
   resultCount,
+  onInputFocus,
+  onToggleDropdown,
 }: FilterBarProps<T>) {
   return (
-    <div className='w-full flex flex-wrap gap-4'>
-      <UseCaseSelector
-        options={useCases}
-        selected={selectedUseCase}
-        onChange={onUseCaseChange}
-      />
+    <div className='w-full flex flex-col gap-4'>
       <CategoryMultiSelect
         options={categories}
         selected={selectedCategories}
@@ -54,6 +46,8 @@ export function FilterBar<T extends string>({
         value={query}
         onChange={onQueryChange}
         resultCount={resultCount}
+        onFocus={onInputFocus}
+        onToggle={onToggleDropdown}
       />
     </div>
   );

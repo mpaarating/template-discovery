@@ -26,21 +26,19 @@ export default function App() {
 
   return (
     <Suspense fallback={<PageSkeleton />}>
-      <div className='min-h-screen w-full bg-gray-100 dark:bg-gray-900'>
+      <div className='min-h-screen flex flex-col bg-gray-100 dark:bg-gray-900'>
         <a href='#maincontent' className='sr-only focus:not-sr-only'>
           Skip to main content
         </a>
 
-        <header className='bg-white shadow w-full'>
-          <div className='w-full px-4 py-4'>
-            <h1 className='text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6'>
-              Template Discovery
-            </h1>
-          </div>
+        <header className='sticky top-0 z-20 h-16 flex items-center px-6 bg-white dark:bg-gray-900 shadow'>
+          <h1 className='text-xl font-bold text-gray-900 dark:text-gray-100'>
+            Template Discovery
+          </h1>
         </header>
 
-        <div className='flex h-full' id='maincontent'>
-          <aside className='w-64 border-r bg-gray-50 dark:bg-gray-800 p-4'>
+        <div className='flex flex-1' id='maincontent'>
+          <aside className='flex-shrink-0 w-56 overflow-y-auto border-r bg-gray-50 dark:bg-gray-900/40 py-4'>
             <UseCaseNav
               templates={templates}
               selected={selectedUseCase}
@@ -48,7 +46,7 @@ export default function App() {
             />
           </aside>
 
-          <main className='flex-1 px-6 py-8 overflow-auto'>
+          <main className='flex-1 p-6 overflow-y-auto'>
             <section className='mb-6'>
               <TemplateSearch
                 templates={
@@ -61,7 +59,6 @@ export default function App() {
                 selectedTemplate={selectedTemplate}
                 onTemplateSelect={setSelectedTemplate}
                 useCase={selectedUseCase}
-                onUseCaseSelect={setSelectedUseCase}
               />
             </section>
 

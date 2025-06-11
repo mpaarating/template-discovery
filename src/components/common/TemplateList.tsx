@@ -1,6 +1,7 @@
 import { ComboboxOptions, ComboboxOption } from '@headlessui/react';
 import { FixedSizeList } from 'react-window';
 import type { ZapTemplate } from '../../types';
+import { CheckIcon } from '@heroicons/react/24/outline';
 
 interface TemplateListProps {
   sorted: ZapTemplate[];
@@ -9,7 +10,10 @@ interface TemplateListProps {
 
 export function TemplateList({ sorted, onSelect }: TemplateListProps) {
   return (
-    <ComboboxOptions className='absolute mt-1 w-full bg-white dark:bg-gray-700 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-10'>
+    <ComboboxOptions
+      static
+      className='absolute mt-1 w-full bg-white dark:bg-gray-700 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-10'
+    >
       {sorted.length > 0 ? (
         <FixedSizeList
           height={240}
@@ -35,9 +39,18 @@ export function TemplateList({ sorted, onSelect }: TemplateListProps) {
                 onClick={() => onSelect(tpl)}
               >
                 {({ selected }) => (
-                  <span className={selected ? 'font-semibold' : 'font-normal'}>
-                    {tpl.title}
-                  </span>
+                  <>
+                    <span
+                      className={selected ? 'font-semibold' : 'font-normal'}
+                    >
+                      {tpl.title}
+                    </span>
+                    {selected && (
+                      <span className='absolute inset-y-0 right-4 flex items-center text-primary'>
+                        <CheckIcon className='h-5 w-5' aria-hidden='true' />
+                      </span>
+                    )}
+                  </>
                 )}
               </ComboboxOption>
             );

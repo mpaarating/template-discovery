@@ -17,16 +17,31 @@ export function UseCaseNav({ templates, selected, onSelect }: UseCaseNavProps) {
   return (
     <nav aria-label='Use cases'>
       <ul className='space-y-2'>
+        {/* "All" – acts as a reset / non-option */}
+        <li key='__all__'>
+          <button
+            type='button'
+            onClick={() => onSelect('')}
+            aria-current={selected === '' ? 'true' : undefined}
+            className={`relative w-full text-left px-4 py-2 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${
+              selected === ''
+                ? 'before:content-[""] before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-primary text-gray-900 dark:text-gray-100 font-medium'
+                : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
+            }`}
+          >
+            All templates
+          </button>
+        </li>
         {useCases.map((uc) => (
           <li key={uc}>
             <button
               type='button'
               onClick={() => onSelect(uc)}
               aria-current={uc === selected ? 'true' : undefined}
-              className={`w-full text-left px-4 py-2 rounded-md transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${
+              className={`relative w-full text-left px-4 py-2 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${
                 uc === selected
-                  ? 'bg-primary text-white'
-                  : 'text-gray-800 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600'
+                  ? 'before:content-[""] before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-primary text-gray-900 dark:text-gray-100 font-medium'
+                  : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
               }`}
             >
               {uc

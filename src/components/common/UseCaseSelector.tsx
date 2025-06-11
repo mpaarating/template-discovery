@@ -23,7 +23,7 @@ export function UseCaseSelector({
       value={selected}
       onChange={onChange}
       as='div'
-      className='mb-6'
+      className='mb-6 w-full'
       aria-label='Filter by use case'
     >
       <ListboxButton
