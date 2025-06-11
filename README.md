@@ -58,7 +58,7 @@ Built with **Vite + React 19 + TypeScript** and styled with **Tailwind CSS** & *
 
 ### Data set
 
-`src/data/templates.large.json` (≈1.7 MB) is loaded client-side. The custom hook `useTemplates` fakes a network request with a one-second delay so that Suspense states can be demonstrated without the need for a real API.
+`src/data/templates.large.json` (≈1.7 MB) is loaded client-side. The custom hook `useTemplates` fakes a network request with a two-second delay so that Suspense states can be demonstrated without the need for a real API.
 
 If you prefer to point the UI at a real endpoint, swap out the implementation inside `src/hooks/useTemplates.ts`.
 
